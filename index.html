@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom Habit Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="logo" id="logo">
+                <div class="logo-icon">
+                    <i class="ri-leaf-fill"></i>
+                </div>
+                <span class="logo-text">Bloom</span>
+            </div>
+            <div class="user-actions">
+                <button class="btn btn-icon btn-outline theme-toggle" id="theme-toggle" title="Toggle Theme">
+                    <i class="ri-sun-line"></i>
+                </button>
+                <button class="btn btn-icon btn-outline" id="export-btn" title="Export Habits">
+                    <i class="ri-download-2-line"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" id="add-habit-btn">
+                    <i class="ri-add-line"></i> New
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <section class="dashboard">
+                <div class="stats-card">
+                    <h3>Current Streak</h3>
+                    <p id="current-streak">0</p>
+                </div>
+                <div class="stats-card">
+                    <h3>Habits Tracked</h3>
+                    <p id="habits-count">0</p>
+                </div>
+            </section>
+
+            <section class="habits-section">
+                <div class="section-header">
+                    <h2 class="section-title">Your Habits</h2>
+                    <div class="filter-actions">
+                        <select id="filter-habits" class="form-control" style="max-width: 120px; font-size: 0.8125rem;">
+                            <option value="all">All</option>
+                            <option value="active">Active</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="habits-grid" id="habits-container">
+                    <!-- Habits will be dynamically inserted here -->
+                    <div class="empty-state" id="empty-state">
+                        <div class="empty-icon">
+                            <i class="ri-plant-line"></i>
+                        </div>
+                        <h3>No habits yet</h3>
+                        <p class="empty-text">Start by adding your first habit to track your progress</p>
+                        <button class="btn btn-primary" id="add-first-habit">
+                            <i class="ri-add-line"></i> Add Habit
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="chart-section">
+                <h2 class="section-title">Progress Overview</h2>
+                <div class="chart-container">
+                    <canvas id="habits-chart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add/Edit Habit Modal -->
+    <div class="modal" id="habit-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">
+                <i class="ri-close-line"></i>
+            </button>
+            <h2 class="modal-title" id="modal-title">Add New Habit</h2>
+            <form id="habit-form">
+                <input type="hidden" id="habit-id">
+                <div class="form-group">
+                    <label for="habit-name">Habit Name</label>
+                    <input type="text" id="habit-name" class="form-control" required placeholder="e.g. Drink water">
+                </div>
+                <div class="form-group">
+                    <label for="habit-description">Description (Optional)</label>
+                    <textarea id="habit-description" class="form-control" rows="3" placeholder="Add a short description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="habit-frequency">Frequency</label>
+                    <select id="habit-frequency" class="form-control" required>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="habit-goal">Goal (days)</label>
+                    <input type="number" id="habit-goal" class="form-control" min="1" value="30" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="cancel-habit">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="save-habit">
+                        Save Habit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="ri-checkbox-circle-fill"></i>
+        <span id="toast-message">Habit saved successfully!</span>
+    </div>
+
+    <script src="script.js" type="module"></script>
+</body>
+</html>
+
+
